@@ -40,6 +40,10 @@ public class RoomService {
         return roomRepository.findByInvitationCode(invitationCode)
                 .orElseThrow(() -> new BusinessException(ErrorCode.INVALID_INVITATION_CODE));
     }
+
+    public boolean hasInvitationCode(String invitationCode) {
+        return roomRepository.findByInvitationCode(invitationCode).isPresent();
+    }
 }
 
 

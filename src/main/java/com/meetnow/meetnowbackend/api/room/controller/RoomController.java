@@ -59,6 +59,11 @@ public class RoomController {
         Random random = new Random();
         String invitationCode = String.valueOf(random.nextInt(9999 - 1000 + 1) + 1000);
 
+        while (roomService.hasInvitationCode(invitationCode)){
+            invitationCode = String.valueOf(random.nextInt(9999 - 1000 + 1) + 1000);
+        }
+
+
         Room room = Room.builder()
                 .roomName(requestDto.getRoomName())
                 .appointmentHour(requestDto.getAppointmentHour())
