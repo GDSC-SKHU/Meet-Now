@@ -29,7 +29,6 @@ public class NewRoomDto {
     @Getter
     @ApiModel(value = "방 등록 후의 응답 객체", description = "등록된 방 이름, 초대코드 포함")
     public static class Response{
-
         @ApiModelProperty(value = "방이름", required = true, example = "호지영방")
         private String roomName;
         @ApiModelProperty(value = "초대코드는 랜덤한 4자리 정수", required = true, example = "4123")

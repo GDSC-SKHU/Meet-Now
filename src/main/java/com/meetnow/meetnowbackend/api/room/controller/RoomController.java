@@ -3,7 +3,7 @@ package com.meetnow.meetnowbackend.api.room.controller;
 
 import com.meetnow.meetnowbackend.api.room.dto.InvitationCodeDto;
 import com.meetnow.meetnowbackend.api.room.dto.NewRoomDto;
-import com.meetnow.meetnowbackend.api.room.dto.RoomNameAndCodeDto;
+import com.meetnow.meetnowbackend.api.room.dto.RoomListDto;
 import com.meetnow.meetnowbackend.domain.joineduser.JoinedUser;
 import com.meetnow.meetnowbackend.domain.joineduser.JoinedUserRepository;
 import com.meetnow.meetnowbackend.domain.joineduser.JoinedUserService;
@@ -84,7 +84,7 @@ public class RoomController {
     // 사용자가 속한 방의 리스트 조회, 사용자 정보를 받고, 사용자가 속한 방(방이름, 초대코드)를 응답.
     @ApiOperation(value = "사용자가 속한 방 이름과 초대코드 모두 조회")
     @GetMapping("/rooms")
-    public Map<String, List<RoomNameAndCodeDto>> roomList(HttpServletRequest request){
+    public Map<String, List<RoomListDto>> roomList(HttpServletRequest request){
 
         String accessToken = request.getHeader(HttpHeaders.AUTHORIZATION).split(" ")[1];
         String username = tokenProvider.getUsername(accessToken);
@@ -94,9 +94,9 @@ public class RoomController {
 //        List<String> roomNames = roomService.findAllRoomNameByUser(user);
         List<Room> rooms = roomService.findAllByUser(user);
 
-        List<RoomNameAndCodeDto> roomDtoList = RoomNameAndCodeDto.ofList(rooms);
+        List<RoomListDto> roomDtoList = RoomListDto.ofList(rooms);
 
-        Map<String, List<RoomNameAndCodeDto>> resultMap = new HashMap<>();
+        Map<String, List<RoomListDto>> resultMap = new HashMap<>();
         resultMap.put("rooms", roomDtoList);
 
         return resultMap;
