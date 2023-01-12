@@ -5,7 +5,6 @@ import com.meetnow.meetnowbackend.api.room.dto.InvitationCodeDto;
 import com.meetnow.meetnowbackend.api.room.dto.NewRoomDto;
 import com.meetnow.meetnowbackend.api.room.dto.RoomListDto;
 import com.meetnow.meetnowbackend.domain.joineduser.JoinedUser;
-import com.meetnow.meetnowbackend.domain.joineduser.JoinedUserRepository;
 import com.meetnow.meetnowbackend.domain.joineduser.JoinedUserService;
 import com.meetnow.meetnowbackend.domain.jwt.service.TokenProvider;
 import com.meetnow.meetnowbackend.domain.room.Room;
@@ -37,7 +36,6 @@ public class RoomController {
     private final UserService userService;
     private final TokenProvider tokenProvider;
     private final JoinedUserService joinedUserService;
-    private final JoinedUserRepository joinedUserRepository;
 
     /**
      *  어떤 요청의 경우는 응답DTO만 필요하거나, DTO 생성 자체가 필요없을 수도 있다.
@@ -57,10 +55,10 @@ public class RoomController {
         User user = userService.findByUsername(username);
 
         Random random = new Random();
-        String invitationCode = String.valueOf(random.nextInt(9999 - 1000 + 1) + 1000);
+        String invitationCode = String.valueOf(random.nextInt(99999 - 10000 + 1) + 10000);
 
         while (roomService.hasInvitationCode(invitationCode)){
-            invitationCode = String.valueOf(random.nextInt(9999 - 1000 + 1) + 1000);
+            invitationCode = String.valueOf(random.nextInt(99999 - 10000 + 1) + 10000);
         }
 
 
