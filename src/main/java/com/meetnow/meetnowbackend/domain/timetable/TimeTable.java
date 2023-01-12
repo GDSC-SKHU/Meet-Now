@@ -1,6 +1,5 @@
 package com.meetnow.meetnowbackend.domain.timetable;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.meetnow.meetnowbackend.domain.appointmentdate.AppointmentDate;
 import com.meetnow.meetnowbackend.domain.room.Room;
 import com.meetnow.meetnowbackend.domain.user.User;
@@ -27,7 +26,6 @@ public class TimeTable {
     private User user;
 
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;

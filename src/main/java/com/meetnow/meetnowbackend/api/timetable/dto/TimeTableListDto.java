@@ -11,14 +11,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
+@Builder
 public class TimeTableListDto {
-//    private String roomName;
-//    private Short appointmentHour;
-//    private String invitationCode;
-//    private String startDate;
-//    private String endDate;
-//
-//    List<TimeTableDto> singleTimeTableDto;
+    private String roomName;
+
+    private String invitationCode;
+
+    List<TimeTableDto> timeTableList;
 
     @Builder
     @Getter

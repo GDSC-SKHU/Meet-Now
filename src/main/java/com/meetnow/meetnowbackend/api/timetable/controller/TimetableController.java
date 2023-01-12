@@ -42,11 +42,18 @@ public class TimetableController {
     @ApiOperation(value = "해당 방의 시간표 모두 조회")
     @GetMapping("/timetables/rooms/{invitationCode}")
     @Transactional(readOnly = true)
-    public ResponseEntity<List<TimeTableListDto.TimeTableDto>> allTimeTable(@PathVariable String invitationCode) {
+    public ResponseEntity<TimeTableListDto> allTimeTable(@PathVariable String invitationCode) {
 
-        Room byInvitationCode = roomService.findByInvitationCode(invitationCode); // 초대코드로 room 찾기
-        List<TimeTableListDto.TimeTableDto> result = TimeTableListDto.TimeTableDto.ofList(byInvitationCode.getTimeTables()); // Lazy Loading
-        return ResponseEntity.ok(result);
+        Room room = roomService.findByInvitationCode(invitationCode); // 초대코드로 room 찾기
+        List<TimeTableListDto.TimeTableDto> result = TimeTableListDto.TimeTableDto.ofList(room.getTimeTables()); // Lazy Loading
+
+        TimeTableListDto returnDto = TimeTableListDto.builder()
+                .timeTableList(result)
+                .invitationCode(invitationCode)
+                .roomName(room.getRoomName())
+                .build();
+
+        return ResponseEntity.ok(returnDto);
     }
 
     /**

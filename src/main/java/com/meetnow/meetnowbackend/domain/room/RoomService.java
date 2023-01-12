@@ -31,10 +31,6 @@ public class RoomService {
 //        return roomRepository.findAllByTimeTable(timeTable);
 //    }
 
-    public List<String> findAllRoomNameByUser(User user) {
-        return roomRepository.findAllRoomNameByUser(user);
-    }
-
     public List<Room> findAllByUser(User user){
         return roomRepository.findAllByUser(user);
     }
