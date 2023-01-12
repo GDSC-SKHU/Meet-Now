@@ -1,7 +1,6 @@
 package com.meetnow.meetnowbackend.domain.room;
 
 import com.meetnow.meetnowbackend.domain.timetable.TimeTable;
-import com.meetnow.meetnowbackend.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,6 +14,7 @@ import java.util.List;
 @Entity
 public class Room{
 
+    // R
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,21 +35,16 @@ public class Room{
     @Column(name = "end_date", length = 30, nullable = false)
     private String endDate;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
     @OneToMany(mappedBy = "room", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private List<TimeTable> timeTables;
 
     @Builder
-    public Room(String roomName, Short appointmentHour, String invitationCode, String startDate, String endDate, User user) {
+    public Room(String roomName, Short appointmentHour, String invitationCode, String startDate, String endDate) {
         this.roomName = roomName;
         this.appointmentHour = appointmentHour;
         this.invitationCode = invitationCode;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.user = user;
     }
 }
 
