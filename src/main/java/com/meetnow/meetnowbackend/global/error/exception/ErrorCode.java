@@ -16,9 +16,14 @@ public enum ErrorCode {
     PASSWORD_NOT_MATCHES(400, "비밀번호를 다시 입력해 주세요."),
     DUPLICATED_USERNAME(400, "이미 존재하는 회원명입니다"),
 
+
     // 방 (Room)
     DUPLICATED_INVITATION_CODE(400, "한번 더 요청해주세요."),
     INVALID_INVITATION_CODE(400, "잘못된 초대 코드입니다"),
+    USER_ALREADY_EXISTS(400, "이미 입장한 방입니다."),
+    NO_TIMETABLE_YET(400, "시간표를 찾을 수 없습니다."),
+    USER_NOT_IN_ROOM(400, "입장한 방이 아닙니다"),
+    TIMETABLE_ALREADY_EXISTS(400, "이미 시간표를 만들었습니다"),
 
 
     //  회원 인증

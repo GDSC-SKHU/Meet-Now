@@ -10,14 +10,14 @@ spring:
 
 
   datasource:
-    url: jdbc:mysql://localhost:3306/meetnow # ???? ??. ?? 3306?? mysql server ???? ?? ?.
+    url: jdbc:mysql://localhost:3307/meetnow # ???? ??. ?? 3306?? mysql server ???? ?? ?.
     username: root
     password:  # ?? ??? ?
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 
     properties:
       hibernate:
@@ -26,9 +26,6 @@ spring:
 
     show-sql: true  # sql ??
     open-in-view: false
-    eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9:
-      eyJzdWIiOiJBQ0NFU1MiLCJhdWQiOiLso7zrj5nshJ0iLCJpYXQiOjE2NzM1MDg2MzgsImV4cCI6MTY3OTUwODYzOH0:
-        iJC2yqkS95pZ9-6pPQbrn_8ZkX8lWffdpoYJg4Gf2DBh_eQp11jpKju6JQtfNWq9cDwqZe-aE3Da_JNQ9ZaV6A:
 
 eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9:
   eyJzdWIiOiJBQ0NFU1MiLCJhdWQiOiLso7zrj5nshJ0iLCJpYXQiOjE2NzM1MjIyNjgsImV4cCI6MTY3OTUyMjI2OH0:

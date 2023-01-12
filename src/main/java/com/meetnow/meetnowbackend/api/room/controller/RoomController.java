@@ -12,6 +12,8 @@ import com.meetnow.meetnowbackend.domain.room.Room;
 import com.meetnow.meetnowbackend.domain.room.RoomService;
 import com.meetnow.meetnowbackend.domain.user.User;
 import com.meetnow.meetnowbackend.domain.user.UserService;
+import com.meetnow.meetnowbackend.global.error.exception.BusinessException;
+import com.meetnow.meetnowbackend.global.error.exception.ErrorCode;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -80,7 +82,7 @@ public class RoomController {
     }
 
     // 사용자가 속한 방의 리스트 조회, 사용자 정보를 받고, 사용자가 속한 방(방이름, 초대코드)를 응답.
-    @ApiOperation(value = "사용자가 속한 방 이름 모두 조회")
+    @ApiOperation(value = "사용자가 속한 방 이름과 초대코드 모두 조회")
     @GetMapping("/rooms")
     public Map<String, List<RoomNameAndCodeDto>> roomList(HttpServletRequest request){
 
@@ -113,13 +115,16 @@ public class RoomController {
         // 2.초대코드를 받아서 방을 찾아온다.
         Room room = roomService.findByInvitationCode(invitationCodeDto.getInvitationCode());
 
-        // 3. user와 room이 준비되었으니, 매핑객체 JoinedUser 생성 후 저장
+        // 3. 이미 입장한 방인지 찾는다.
+        if (joinedUserService.hasUserAndRoom(user, room))
+            throw new BusinessException(ErrorCode.USER_ALREADY_EXISTS);
+
+        // 4. user와 room이 준비되었으니, 매핑객체 JoinedUser 생성 후 저장
         JoinedUser joinedUser = JoinedUser.builder()
                 .user(user)
                 .room(room)
                 .build();
         joinedUserService.save(joinedUser);
-
 
         return ResponseEntity.noContent().build();
     }

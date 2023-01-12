@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Builder
 public class TimeTableListDto {
     private String roomName;
-
+    private String startDate;
     private String invitationCode;
 
     List<TimeTableDto> timeTableList;
