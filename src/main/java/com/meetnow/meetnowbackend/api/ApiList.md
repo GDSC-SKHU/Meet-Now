@@ -44,18 +44,15 @@
     - [
       {
       "date" : "12.27(금)",
-      "appoStart" : "14",
-      "appoEnd" : "17"
+      "time" : "14"
       },
       {
       "date" : "12.28(토)",
-      "appoStart" : "14",
-      "appoEnd" : "17"
+      "time" : "15"
       },
       {
-      "date" : "12.29(일)",
-      "appoStart" : "14",
-      "appoEnd" : "17"
+      "date" : "12.28(토)",
+      "time" : "16"
       }
       ]
     - 위와 같이 배열이나 배열로 변환되는 형식으로 보내야 함.
@@ -72,44 +69,59 @@
   - [
     {
     "username": "주동석",
-    "appointmentDateDto": [
+    "timeList": [
     {
     "date": "12.27(금)",
-    "appoStart": "14",
-    "appoEnd": "17"
+    "time" : ""
     }
     ]
     },
     {
     "username": "조동석",
-    "appointmentDateDto": [
+    "timeList": [
     {
     "date": "12.27(금)",
-    "appoStart": "14",
-    "appoEnd": "17"
+    "time" : "15"
+    },
+    {
+    "date": "12.27(금)",
+    "time" : "16"
     },
     {
     "date": "12.28(토)",
-    "appoStart": "14",
-    "appoEnd": "17"
-    },
-    {
-    "date": "12.29(일)",
-    "appoStart": "14",
-    "appoEnd": "17"
+    "time" : "4"
     }
     ]
     }
     ]
-
-
-
 
 1. 요청으로 어떤 값들을 받아올지 (요청 DTO)
 
 2. 어떤 작업을 할지
 
 3. 받아서 어떻게 응답할지 (응답 DTO)
+
+### 5. 해당 유저의 타임테이블 변경 (덮어쓰기)
+- #### [PUT] /timetables/rooms/{invitationCode}
+- 등록한 적이 있는 타임테이블을 수정(입력한 값대로 덮어쓰기)
+  - 방은 invitationCode 를 사용해 특정한다.
+  - 유저는 토큰으로 특정한다.
+- 요청예시는 다음처럼, 3번과 같다. 
+  
+- [
+  {
+  "date" : "12.27(금)",
+  "time" : "14"
+  },
+  {
+  "date" : "12.28(토)",
+  "time" : "15"
+  },
+  {
+  "date" : "12.28(토)",
+  "time" : "16"
+  }
+  ]
 
 
 
