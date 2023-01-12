@@ -2,6 +2,8 @@ package com.meetnow.meetnowbackend.global.interceptor;
 
 import com.meetnow.meetnowbackend.domain.jwt.constant.GrantType;
 import com.meetnow.meetnowbackend.domain.jwt.service.TokenProvider;
+import com.meetnow.meetnowbackend.global.error.exception.BusinessException;
+import com.meetnow.meetnowbackend.global.error.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -25,16 +27,22 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
+        // 0. 헤더 있는지 체크
+        if (authorizationHeader.length() <1){
+            throw new BusinessException(ErrorCode.NOT_EXISTS_AUTHORIZATION);
+        }
+
         //  1. authorization Header의 TokenType Bearer 체크
         String[] authorizations = authorizationHeader.split(" ");
+
         if( authorizations.length < 2 || ( !GrantType.BEARER.getType().equals(authorizations[0]))){
-            throw new IllegalArgumentException("토큰타입 이상해요");
+            throw new BusinessException(ErrorCode.NOT_VALID_BEARER_GRANT_TYPE);
         }
 
         //  2. 토큰 검증
         String token = authorizations[1];   // token 변수는 액세스 토큰의 몸통 부분.
         if( !tokenProvider.validateToken(token)){
-            throw new IllegalArgumentException("토큰 유효하지 않음");
+            throw new BusinessException(ErrorCode.NOT_VALID_TOKEN);
         }
 
         return true;
