@@ -67,7 +67,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ErrorResponse> handleBusinessException(BusinessException e){
         //  ErrorResponse 에 추가할 에러메시지 리스트 생성
-        List<String> message = List.of(e.getMessage());
+        List<String> message = List.of(e.getErrorCode().toString());
 
         //  해당 Custom Exception 에 있는 status 를 HttpStatus 로 바꿈.
         HttpStatus httpStatus = HttpStatus.valueOf(e.getStatus());

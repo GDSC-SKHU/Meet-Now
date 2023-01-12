@@ -12,8 +12,6 @@ public enum ErrorCode {
     METHOD_ARGUMENT_TYPE_MISMATCH(400, "유효하지 않은 요청값입니다"),
 
     // 회원
-    MISMATCHED_PASSWORD(400, "비밀번호 입력이 일치하지 않습니다."),
-    PASSWORD_NOT_MATCHES(400, "비밀번호를 다시 입력해 주세요."),
     DUPLICATED_USERNAME(400, "이미 존재하는 회원명입니다"),
 
 

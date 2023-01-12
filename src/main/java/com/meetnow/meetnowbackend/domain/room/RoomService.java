@@ -4,7 +4,6 @@ import com.meetnow.meetnowbackend.domain.user.User;
 import com.meetnow.meetnowbackend.global.error.exception.BusinessException;
 import com.meetnow.meetnowbackend.global.error.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,12 +18,7 @@ public class RoomService {
 
     @Transactional
     public Room save(Room room) {
-        try {
-            return roomRepository.save(room);
-        } catch (DataIntegrityViolationException e){
-            throw new  BusinessException(ErrorCode.DUPLICATED_INVITATION_CODE);
-        }
-
+        return roomRepository.save(room);
     }
 
 //    public List<Room> findAllByTimeTable(TimeTable timeTable) {
