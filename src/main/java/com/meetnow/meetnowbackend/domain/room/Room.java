@@ -25,7 +25,7 @@ public class Room{
     @Column(name = "appointment_Hour", length = 3, nullable = false)
     private Short appointmentHour;
 
-    @Column(name = "invitation_code", length = 4, nullable = false, unique = true)
+    @Column(name = "invitation_code", length = 5, nullable = false, unique = true)
     private String invitationCode;
 
     // StartDate와 endDate는 해당 방에서 잡을 수 있는 약속시간의 범위
