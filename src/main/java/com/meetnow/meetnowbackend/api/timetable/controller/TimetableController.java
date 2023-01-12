@@ -44,7 +44,6 @@ public class TimetableController {
     @Transactional(readOnly = true)
     public ResponseEntity<List<TimeTableListDto.TimeTableDto>> allTimeTable(@PathVariable String invitationCode) {
 
-
         Room byInvitationCode = roomService.findByInvitationCode(invitationCode); // 초대코드로 room 찾기
         List<TimeTableListDto.TimeTableDto> result = TimeTableListDto.TimeTableDto.ofList(byInvitationCode.getTimeTables()); // Lazy Loading
         return ResponseEntity.ok(result);
@@ -59,7 +58,7 @@ public class TimetableController {
      *  3. 그 타임테이블에 어떤 AppointmentDate들이 들어갈지
      * 응답 - 반환타입 void
      */
-
+    //3
     @ApiOperation(value = "사용자별 시간표 등록")
     @PostMapping("/timetables/rooms/{invitationCode}") // 시간표 등록
     public void createTimeTable(
@@ -71,15 +70,16 @@ public class TimetableController {
         String username = tokenProvider.getUsername(accessToken);
         User user = userService.findByUsername(username);
 
-        TimeTable tt = timeTableService.findByUser(user);
-        if(tt != null){
+        Room room = roomService.findByInvitationCode(invitationCode); // 초대코드로 room 찾기
+        TimeTable nullTable = timeTableService.findByUserAndRoom(user, room);
+        if(nullTable != null){
             throw new IllegalArgumentException("타임테이블 중복 생성 불가. 수정 기능 미완성");
         }
-        Room byInvitationCode = roomService.findByInvitationCode(invitationCode); // 초대코드로 room 찾기
+
 
         TimeTable timeTable = TimeTable.builder() // timetable 객체 생성
                 .user(user)
-                .room(byInvitationCode)
+                .room(room)
                 .build();
 
         TimeTable savedTable = timeTableService.save(timeTable);// 저장
@@ -100,4 +100,46 @@ public class TimetableController {
         appoDates.stream()
                         .forEach(appo -> appointmentDateService.save(appo));
     }
+
+//    @ApiOperation(value = "사용자별 시간표 등록")
+//    @PutMapping("/timetables/rooms/{invitationCode}") // 시간표 등록
+//    public ResponseEntity updateTimeTable( @RequestBody List<NewAppoDto> requestDto
+//            , HttpServletRequest request
+//            , @PathVariable String invitationCode){
+//        String accessToken = request.getHeader(HttpHeaders.AUTHORIZATION).split(" ")[1];
+//        String username = tokenProvider.getUsername(accessToken);
+//        User user = userService.findByUsername(username);
+//
+//        TimeTable timeTable = timeTableService.findByUser(user);
+//        //
+//        return ResponseEntity.noContent().build();
+//    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
