@@ -1,6 +1,9 @@
 package com.meetnow.meetnowbackend.domain.user;
 
+import com.meetnow.meetnowbackend.global.error.exception.BusinessException;
+import com.meetnow.meetnowbackend.global.error.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,11 +16,13 @@ public class UserService {
 
     @Transactional
     public User save(User user) {
-        return userRepository.save(user);
-    }
+        try {
+            return userRepository.save(user);
+            // 회원명 중복 시.
+        } catch (DataIntegrityViolationException e){
+            throw new BusinessException(ErrorCode.DUPLICATED_USERNAME);
+        }
 
-    public User findByUserId(Long id) {
-        return userRepository.findById(id).get();
     }
 
     @Transactional

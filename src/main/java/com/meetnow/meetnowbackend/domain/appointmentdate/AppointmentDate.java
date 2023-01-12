@@ -23,21 +23,17 @@ public class AppointmentDate {
     private String date;
 
     // appoStart와 appoEnd는 방에 소속된 사용자가 등록한 시간(Hour)
-    @Column(name = "appo_start", nullable = false)
-    private String appoStart;
-
-    @Column(name = "appo_end", nullable = false)
-    private String appoEnd;
+    @Column(name = "time", nullable = false)
+    private String time;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "timetable_id", nullable = false)
     private TimeTable timeTable;
 
     @Builder
-    public AppointmentDate(String date, String appoStart, String appoEnd, TimeTable timeTable) {
+    public AppointmentDate(String date, String time, TimeTable timeTable) {
         this.date = date;
-        this.appoStart = appoStart;
-        this.appoEnd = appoEnd;
+        this.time = time;
         this.timeTable = timeTable;
     }
 }

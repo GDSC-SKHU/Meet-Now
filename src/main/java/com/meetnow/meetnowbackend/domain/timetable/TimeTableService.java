@@ -1,5 +1,6 @@
 package com.meetnow.meetnowbackend.domain.timetable;
 
+import com.meetnow.meetnowbackend.domain.room.Room;
 import com.meetnow.meetnowbackend.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,8 +13,8 @@ public class TimeTableService {
 
     private final TimeTableRepository timeTableRepository;
 
-    public TimeTable findByUser(User user) {
-        return timeTableRepository.findByUser(user);
+    public TimeTable findByUserAndRoom(User user, Room room) {
+        return timeTableRepository.findByUserAndRoom(user, room);
     }
 
     @Transactional

@@ -53,16 +53,13 @@ public class TimeTableListDto {
 
         @ApiModelProperty(value = "날짜", required = true, example = "01-23(목)")
         private String date;
-        @ApiModelProperty(value = "시작시간, 14를 보낼 경우 2시부터 가능하다는 의미", required = true, example = "14")
-        private String appoStart;
-        @ApiModelProperty(name = "fsdfds", value = "종료시간, 17을 보낼 경우 5시까지 가능하다는 의미.", required = true, example = "17")
-        private String appoEnd;
+        @ApiModelProperty(value = "약속시간. 24시간을 기준으로 함.", required = true, example = "20")
+        private String time;
 
         public static AppointmentDateDto of(AppointmentDate appointmentDate){
             return AppointmentDateDto.builder()
                     .date(appointmentDate.getDate())
-                    .appoStart(appointmentDate.getAppoStart())
-                    .appoEnd(appointmentDate.getAppoEnd())
+                    .time(appointmentDate.getTime())
                     .build();
         }
 

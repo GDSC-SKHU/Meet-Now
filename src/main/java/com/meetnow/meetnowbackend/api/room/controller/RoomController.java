@@ -78,7 +78,6 @@ public class RoomController {
 //        List<String> roomNames = roomService.findAllRoomNameByUser(user);
         List<Room> rooms = roomService.findAllByUser(user);
 
-
         List<RoomNameAndCodeDto> roomDtoList = RoomNameAndCodeDto.ofList(rooms);
 
         Map<String, List<RoomNameAndCodeDto>> resultMap = new HashMap<>();
