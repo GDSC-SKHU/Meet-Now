@@ -12,6 +12,7 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
 
 
 
+
     @Query("SELECT r.roomName FROM Room r JOIN r.timeTables t JOIN t.user u WHERE u = :user")
     List<String> findAllRoomNameByUser(@Param("user") User user);
     List<Room> findAllByUser(User user);

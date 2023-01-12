@@ -61,7 +61,7 @@ public class TimetableController {
     //3
     @ApiOperation(value = "사용자별 시간표 등록")
     @PostMapping("/timetables/rooms/{invitationCode}") // 시간표 등록
-    public void createTimeTable(
+    public ResponseEntity createTimeTable(
                                 @RequestBody List<NewAppoDto> requestDto
             , HttpServletRequest request
             , @PathVariable String invitationCode){
@@ -99,21 +99,42 @@ public class TimetableController {
 //        }
         appoDates.stream()
                         .forEach(appo -> appointmentDateService.save(appo));
+        return ResponseEntity.noContent().build();
     }
 
-//    @ApiOperation(value = "사용자별 시간표 등록")
-//    @PutMapping("/timetables/rooms/{invitationCode}") // 시간표 등록
-//    public ResponseEntity updateTimeTable( @RequestBody List<NewAppoDto> requestDto
-//            , HttpServletRequest request
-//            , @PathVariable String invitationCode){
-//        String accessToken = request.getHeader(HttpHeaders.AUTHORIZATION).split(" ")[1];
-//        String username = tokenProvider.getUsername(accessToken);
-//        User user = userService.findByUsername(username);
-//
-//        TimeTable timeTable = timeTableService.findByUser(user);
-//        //
-//        return ResponseEntity.noContent().build();
-//    }
+    /**
+     * 1. 해당 방에서, 해당 유저가 만든 타임테이블(에 해당하는 AppointmentDate를) 모두 지운다.
+     * 2. requestDto 정보를 기반으로 ApiList 3번처럼 등록
+     */
+    @ApiOperation(value = "사용자별 시간표 수정")
+    @PutMapping("/timetables/rooms/{invitationCode}") // 시간표 등록
+    public ResponseEntity updateTimeTable( @RequestBody List<NewAppoDto> requestDto
+            , HttpServletRequest request
+            , @PathVariable String invitationCode){
+        String accessToken = request.getHeader(HttpHeaders.AUTHORIZATION).split(" ")[1];
+        String username = tokenProvider.getUsername(accessToken);
+        User user = userService.findByUsername(username);
+
+        Room room = roomService.findByInvitationCode(invitationCode); // 초대코드로 room 찾기
+
+        TimeTable timeTable = timeTableService.findByUserAndRoom(user, room);
+
+        // 수정을 위해 해당 타임테이블에 속한 appointmentDate를 모두 제거
+        appointmentDateService.deleteByTimeTable(timeTable);
+
+        // 모두 제거되었으므로, DTO의 리스트를 값으로 하는 AppointmentDate 객체를 생성해 저장
+        List<AppointmentDate> appoDates = requestDto.stream()
+                .map(appoDto -> appoDto.toEntity(timeTable))
+                .collect(Collectors.toList());
+
+//        for (AppointmentDate appoDate : appoDates) {
+//            appointmentDateService.save(appoDate);
+//        }
+
+        appoDates.stream()
+                .forEach(appo -> appointmentDateService.save(appo));
+        return ResponseEntity.noContent().build();
+    }
 }
 
 

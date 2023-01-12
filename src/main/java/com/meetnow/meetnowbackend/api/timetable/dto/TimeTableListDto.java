@@ -28,13 +28,13 @@ public class TimeTableListDto {
         private String username;
 
         @ApiModelProperty(value = "해당 사용자가 가능한 약속시간", required = true, example = "")
-        private List<AppointmentDateDto> appointmentDateDto;
+        private List<AppointmentDateDto> timeList;
 
         // 정적 팩토리 메소드
         public static TimeTableDto of(TimeTable timeTable){
             return TimeTableDto.builder()
                     .username(timeTable.getUser().getUsername())
-                    .appointmentDateDto(AppointmentDateDto.ofList(timeTable.getAppointmentDates()))
+                    .timeList(AppointmentDateDto.ofList(timeTable.getAppointmentDates()))
                     .build();
         }
 
