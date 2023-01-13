@@ -109,9 +109,10 @@ public class TimetableController {
         User user = userService.findByUsername(username);
 
         Room room = roomService.findByInvitationCode(invitationCode); // 초대코드로 room 찾기
-        if (timeTableService.hasUserAndRoom(user, room)){
-            throw new BusinessException(ErrorCode.TIMETABLE_ALREADY_EXISTS);
-        }
+
+//        if (timeTableService.hasUserAndRoom(user, room)){
+//            throw new BusinessException(ErrorCode.TIMETABLE_ALREADY_EXISTS);
+//        }
 
         TimeTable timeTable = TimeTable.builder() // timetable 객체 생성
                 .user(user)
@@ -154,7 +155,6 @@ public class TimetableController {
         Room room = roomService.findByInvitationCode(invitationCode); // 초대코드로 room 찾기
 
         TimeTable timeTable = timeTableService.findByUserAndRoom(user, room);
-
         // 수정을 위해 해당 타임테이블에 속한 appointmentDate를 모두 제거
         appointmentDateService.deleteByTimeTable(timeTable);
 
