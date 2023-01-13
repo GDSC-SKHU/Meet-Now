@@ -154,22 +154,44 @@ public class TimetableController {
 
         Room room = roomService.findByInvitationCode(invitationCode); // 초대코드로 room 찾기
 
-        TimeTable timeTable = timeTableService.findByUserAndRoom(user, room);
-        // 수정을 위해 해당 타임테이블에 속한 appointmentDate를 모두 제거
-        appointmentDateService.deleteByTimeTable(timeTable);
 
-        // 모두 제거되었으므로, DTO의 리스트를 값으로 하는 AppointmentDate 객체를 생성해 저장
+        TimeTable timeTable = timeTableService.findByUserAndRoom(user, room);
+        if(timeTable == null){
+            timeTable = TimeTable.builder() // timetable 객체 생성
+                    .user(user)
+                    .room(room)
+                    .build();
+
+            timeTable = timeTableService.save(timeTable);// 저장
+            TimeTable finalTimeTable = timeTable;
+            List<AppointmentDate> appoDates = requestDto.stream()
+                    .map(appoDto -> appoDto.toEntity(finalTimeTable))
+                    .collect(Collectors.toList());
+
+            appoDates.stream()
+                    .forEach(appo -> appointmentDateService.save(appo));
+            return ResponseEntity.noContent().build();
+        }
+        // 수정을 위해 해당 타임테이블에 속한 appointmentDate를 모두 제거
+
+        appointmentDateService.deleteByTimeTable(timeTable);
+        TimeTable finalTimeTable1 = timeTable;
         List<AppointmentDate> appoDates = requestDto.stream()
-                .map(appoDto -> appoDto.toEntity(timeTable))
+                .map(appoDto -> appoDto.toEntity(finalTimeTable1))
                 .collect(Collectors.toList());
+
+        appoDates.stream()
+                .forEach(appo -> appointmentDateService.save(appo));
+        return ResponseEntity.noContent().build();
+        // 모두 제거되었으므로, DTO의 리스트를 값으로 하는 AppointmentDate 객체를 생성해 저장
+
 
 //        for (AppointmentDate appoDate : appoDates) {
 //            appointmentDateService.save(appoDate);
 //        }
 
-        appoDates.stream()
-                .forEach(appo -> appointmentDateService.save(appo));
-        return ResponseEntity.noContent().build();
+
+
     }
 }
 
