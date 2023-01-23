@@ -21,13 +21,11 @@ public class RoomService {
         return roomRepository.save(room);
     }
 
-//    public List<Room> findAllByTimeTable(TimeTable timeTable) {
-//        return roomRepository.findAllByTimeTable(timeTable);
-//    }
-
     public List<Room> findAllByUser(User user){
         return roomRepository.findAllByUser(user);
     }
+
+
 
     @Transactional
     public Room findByInvitationCode(String invitationCode){
@@ -38,6 +36,7 @@ public class RoomService {
     public boolean hasInvitationCode(String invitationCode) {
         return roomRepository.findByInvitationCode(invitationCode).isPresent();
     }
+
 }
 
 

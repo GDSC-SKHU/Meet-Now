@@ -2,6 +2,7 @@ package com.meetnow.meetnowbackend.domain.room;
 
 import com.meetnow.meetnowbackend.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -16,6 +17,13 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     List<Room> findAllByUser(@Param("user") User user);
 
     Optional<Room> findByInvitationCode(String invitationCode);
+
+
+    @Query("UPDATE Room  r SET r.roomName = :roomName WHERE r.roomName = :roomName")
+    @Modifying
+    void findBRN(@Param("roomName") String roomName);
+
+    void deleteByRoomName(String roomName);
 }
 
 

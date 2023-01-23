@@ -18,10 +18,11 @@ public class UserService {
     public User save(User user) {
         try {
             return userRepository.save(user);
-            // 회원명 중복 시.
-        } catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) { // 회원명 중복 시.
             throw new BusinessException(ErrorCode.DUPLICATED_USERNAME);
         }
+
+
 
     }
 

@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -34,6 +35,9 @@ public class Room{
 
     @Column(name = "end_date", length = 30, nullable = false)
     private String endDate;
+
+    @Temporal(TemporalType.TIME)
+    private Date date;
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private List<TimeTable> timeTables;
