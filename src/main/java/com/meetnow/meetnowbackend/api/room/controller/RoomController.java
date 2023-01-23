@@ -5,6 +5,7 @@ import com.meetnow.meetnowbackend.api.room.dto.InvitationCodeDto;
 import com.meetnow.meetnowbackend.api.room.dto.NewRoomDto;
 import com.meetnow.meetnowbackend.api.room.dto.RoomListDto;
 import com.meetnow.meetnowbackend.api.room.service.ApiRoomService;
+import com.meetnow.meetnowbackend.domain.room.RoomService;
 import com.meetnow.meetnowbackend.domain.user.User;
 import com.meetnow.meetnowbackend.global.config.auth.LoginUser;
 import io.swagger.annotations.ApiOperation;
@@ -22,6 +23,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class RoomController {
     private final ApiRoomService apiRoomService;
+    private final RoomService roomService;
     /**
      *  어떤 요청의 경우는 응답DTO만 필요하거나, DTO 생성 자체가 필요없을 수도 있다.
      *  DELETE 요청의 경우 url에 달린 식별자를 @PathVariable 로 받고 삭제시킨 다음
@@ -49,7 +51,7 @@ public class RoomController {
     public ResponseEntity inviteUser(@RequestBody InvitationCodeDto invitationCodeDto,
                                      @LoginUser User user){
 
-        apiRoomService.invite(invitationCodeDto.getInvitationCode(), user);
+        roomService.invite(invitationCodeDto.getInvitationCode(), user);
         return ResponseEntity.noContent().build();
     }
 
