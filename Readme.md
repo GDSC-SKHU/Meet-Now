@@ -15,6 +15,10 @@
     팔로워인 DTO들이 리더인 domain 패키지의 요소들을 따른다.
     그래서 가급적 api 패키지 내부의 DTO클래스에서 toEntity()는 만들되,
     domain 패키지 내부의 entity 클래스에서 toDto()는 만들지 않는다
+  - 정리하자면
+  - api 패키지 -> domain 패키지 알아도 됨
+  - domain 패키지 -> api 패키지의 존재를 모르게끔
+   
 
 
       
